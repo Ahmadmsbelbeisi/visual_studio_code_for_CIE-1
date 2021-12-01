@@ -4,7 +4,7 @@ Heroku is a managed app hosting platform.
 
 Launch code-server on Heroku to get on-demand dev environments that turn off when you don't need them! 💵
 
-![code-server and Heroku](../img/heroku-app-create.png)
+![code-server and Heroku](/img/heroku-app-create.png)
 
 ## Step 1: Click to deploy
 
@@ -24,7 +24,7 @@ After it has built, you can access it by pressing "View" or "Open app."
 
 ## Step 3: Create a new GitHub repo with this template
 
-<img src="../img/modify-github-template.png" alt="Modify GitHub template" width="600" />
+<img src="/img/modify-github-template.png" alt="Modify GitHub template" width="600" />
 
 Press the button in the top right of the repo, or or click to [use this template](https://github.com/bpmct/deploy-code-server/generate).
 
@@ -51,7 +51,7 @@ Press the button in the top right of the repo, or or click to [use this template
 
 1. (Optional): [Configure rclone](https://github.com/cdr/deploy-code-server/tree/main/deploy-container#-persist-your-filesystem-with-rclone) so that you can save your VS Code config and files without commiting
 
-See the [deploy-container README](../deploy-container) for other config vars for your environment.
+See the [deploy-container README](/deploy-container) for other config vars for your environment.
 
 ---
 
