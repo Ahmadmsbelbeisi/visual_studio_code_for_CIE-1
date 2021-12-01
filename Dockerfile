@@ -45,12 +45,6 @@ RUN sudo apt-get install -y python3-matplotlib
 RUN sudo apt-get install -y gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 wine64
 COPY deploy-container/myTool/Exercise1 /home/coder/project/Exercise1
 COPY deploy-container/myTool/Exercise2 /home/coder/project/Exercise2
-COPY deploy-container/myTool/Exercise3 /home/coder/project/Exercise3
-COPY deploy-container/myTool/Exercise4 /home/coder/project/Exercise4
-COPY deploy-container/myTool/Exercise5 /home/coder/project/Exercise5
-COPY deploy-container/myTool/Exercise6 /home/coder/project/Exercise6
-COPY deploy-container/myTool/Exercise7 /home/coder/project/Exercise7
-COPY deploy-container/myTool/Exercise8 /home/coder/project/Exercise8
 RUN sudo apt-get install -y cmake-gui
 RUN sudo apt-get install -y build-essential gdb
 RUN sudo apt-get install -y libgmp-dev
