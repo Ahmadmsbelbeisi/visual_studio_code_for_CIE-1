@@ -1,29 +1,58 @@
-# deploy-code-server 🚀
+# Guide: Launching `code-server` on Heroku
 
-A collection of one-click buttons and scripts for deploying [code-server](https://github.com/cdr/code-server) to various cloud hosting platforms. The fastest way to get a code-server environment! ☁️
+Heroku is a managed app hosting platform.
 
-|                                                                                                                 | Name              | Type          | Lowest-Price Plan             | Deploy                                                  |
-| --------------------------------------------------------------------------------------------------------------- | ----------------- | ------------- | ----------------------------- | ------------------------------------------------------- |
-| [![AWS EC2](img/logo/aws-ec2.png)](https://digitalocean.com)                                                    | AWS EC2           | VM            | Free Tier, 1 CPU, 1 GB RAM    | [see guide](guides/aws-ec2.md)                          |
-| [![DigitalOcean](img/logo/digitalocean.png)](https://digitalocean.com)                                          | DigitalOcean      | VM            | $5/mo, 1 CPU, 1 GB RAM        | [see guide](guides/digitalocean.md)                     |
-| [![Vultr](img/logo/vultr.png)](https://vultr.com)                                                               | Vultr             | VM            | $3.50/mo, 1 CPU, 512 MB RAM   | coming soon                                             |
-| [![Linode](img/logo/linode.png)](https://linode.com)                                                            | Linode            | VM            | $5/mo, 1 CPU, 1 GB RAM        | [see guide](guides/linode.md)                           |
-| [![Railway](img/logo/railway.png)](https://railway.app)                                                         | Railway           | Container     | Free, Shared CPU, 1 GB RAM 🚀 | [see guide](guides/railway.md)                          |
-| [![Heroku](img/logo/heroku.png)](https://heroku.com)                                                            | Heroku            | Container     | Free, 1 CPU, 512 MB RAM       | [see guide](guides/heroku.md)                           |
-| [![Azure App Service](img/logo/azure-app-service.png)](https://azure.microsoft.com/en-us/services/app-service/) | Azure App Service | Container     | Free, 1 CPU, 1 GB RAM         | [see guide](https://github.com/bpmct/code-server-azure) |
-| [![Coder](img/logo/coder.png)](https://coder.com/docs)                                                          | Coder             | Dev Workspace | For developer teams 👨🏼‍💻        | [read the docs](https://coder.com/docs)                 |
+Launch code-server on Heroku to get on-demand dev environments that turn off when you don't need them! 💵
+
+![code-server and Heroku](../img/heroku-app-create.png)
+
+## Step 1: Click to deploy
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/bpmct/code-server-heroku/tree/main)
 
 ---
 
-## code-server on a VM vs. a Container
+## Step 2: Configure & deploy your environment
 
-- VMs are deployed once, and then can be modified to install new software
-  - You need to save "snapshots" to use your latest images
-  - Storage is always persistent, and you can usually add extra volumes
-  - VMs can support many workloads, such as running Docker or Kubernetes clusters
-  - [👀 Docs for the VM install script](deploy-vm/)
-- Deployed containers do not persist, and are often rebuilt
-  - Containers can shut down when you are not using them, saving you money
-  - All software and dependencies need to be defined in the `Dockerfile` or install script so they aren't destroyed on a rebuild. This is great if you want to have a new, clean environment every time you code
-  - Storage may not be redundant. You may have to use [rclone](https://rclone.org/) to store your filesystem on a cloud service, for info:
-- [📄 Docs for code-server-deploy-container](deploy-container/)
+`App name`: The URL and you can access code-server with
+
+`PASSWORD`: A password you can use to log in
+
+`GIT_REPO`: The HTTPS URL of a git repo you'd like to use in code-server. (optional)
+
+After it has built, you can access it by pressing "View" or "Open app."
+
+## Step 3: Create a new GitHub repo with this template
+
+<img src="../img/modify-github-template.png" alt="Modify GitHub template" width="600" />
+
+Press the button in the top right of the repo, or or click to [use this template](https://github.com/bpmct/deploy-code-server/generate).
+
+## Step 4: Set up automatic builds with this repo
+
+1. In Heroku, navigate to `Deploy -> Deployment Method"
+1. Link it with the GitHub repo you just created.
+1. Open the repo in GitHub and edit the `Dockerfile`
+1. Add some custom tools (like NodeJS) and commit to the main branch:
+
+   ```Dockerfile
+   # You can add custom software and dependencies for your environment here. Some examples:
+
+   # RUN code-server --install-extension esbenp.prettier-vscode
+   # RUN sudo apt-get install -y build-essential
+   # RUN COPY myTool /home/coder/myTool
+
+   # Install NodeJS
+   RUN sudo curl -fsSL https://deb.nodesource.com/setup_15.x | sudo bash -
+   RUN sudo apt-get install -y nodejs
+   ```
+
+1. Head back to Heroku and notice a new deployment has started. After it has completed, you can use these tools in your environment.
+
+1. (Optional): [Configure rclone](https://github.com/cdr/deploy-code-server/tree/main/deploy-container#-persist-your-filesystem-with-rclone) so that you can save your VS Code config and files without commiting
+
+See the [deploy-container README](../deploy-container) for other config vars for your environment.
+
+---
+
+To update your code-server version, modify the version number on line 2 in your Dockerfile. See the [list of tags](https://hub.docker.com/r/codercom/code-server/tags?page=1&ordering=last_updated) for the latest version.
